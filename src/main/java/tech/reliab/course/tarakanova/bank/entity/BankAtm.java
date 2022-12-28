@@ -26,7 +26,7 @@ public class BankAtm {
     String name;
     String address;
     @Enumerated(EnumType.STRING)
-    StatusAtm status;
+    StatusAtm status = StatusAtm.NOT_WORKS;
     @OneToOne
     Bank bank;
     @OneToOne
