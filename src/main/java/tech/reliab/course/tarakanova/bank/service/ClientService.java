@@ -16,4 +16,8 @@ public class ClientService {
         client.setPlaceWork("placeWork");
         return clientRepository.save(client);
     }
+
+    public void save(Client client) {
+        clientRepository.save(client);
+    }
 }

@@ -14,4 +14,8 @@ public class CreditAccountService {
         var credit = new CreditAccount();
         return creditAccountRepository.save(credit);
     }
+
+    public void save(CreditAccount creditAccount) {
+        creditAccountRepository.save(creditAccount);
+    }
 }

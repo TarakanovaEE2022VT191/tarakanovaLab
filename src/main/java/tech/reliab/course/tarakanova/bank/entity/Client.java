@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(of = {"id"})
 public class Client {
     @GeneratedValue
     @Id
@@ -30,7 +32,7 @@ public class Client {
     String placeWork;
     BigDecimal monthlyIncome;
     @ManyToMany
-    Set<Bank> banks;
+    Set<Bank> banks = new HashSet<>();
     @OneToMany(mappedBy = "client")
     Set<CreditAccount> creditAccounts = new HashSet<>();
     @OneToMany(mappedBy = "client")

@@ -22,6 +22,8 @@ create table bank_office
     is_credit_possible boolean,
     cash_in            boolean,
     cash_out           boolean,
+    bank_id            UUID
+        CONSTRAINT fk_bank_id REFERENCES bank,
     amount             numeric(19, 4),
     rent_price         numeric(19, 4)
 );
@@ -34,10 +36,10 @@ create table employee
     middle_name     varchar(50),
     birth_date      date,
     position        varchar(50),
-    bank_id            UUID
+    bank_id         UUID
         CONSTRAINT fk_bank_id REFERENCES bank,
     is_remote       boolean,
-    bank_office_id     UUID
+    bank_office_id  UUID
         CONSTRAINT fk_bank_office_id REFERENCES bank_office,
     is_issue_credit boolean,
     pay             numeric(19, 4)
@@ -49,9 +51,9 @@ create table bank_atm
     name             varchar(50),
     address          varchar(150),
     status           varchar(50),
-    bank_id             UUID
+    bank_id          UUID
         CONSTRAINT fk_bank_id REFERENCES bank,
-    employer_id         UUID
+    employer_id      UUID
         CONSTRAINT fk_employer_id REFERENCES employee,
     cash_in          boolean,
     cash_out         boolean,
@@ -72,34 +74,37 @@ create table client
 
 create table payment_account
 (
-    id     uuid NOT NULL PRIMARY KEY,
+    id        uuid NOT NULL PRIMARY KEY,
     client_id UUID
         CONSTRAINT fk_client_id REFERENCES client,
     bank_id   UUID
         CONSTRAINT fk_bank_id REFERENCES bank,
-    amount numeric(19, 4)
+    amount    numeric(19, 4)
 );
 
 create table credit_account
 (
-    id              uuid NOT NULL PRIMARY KEY,
+    id                 uuid NOT NULL PRIMARY KEY,
     client_id          UUID
         CONSTRAINT fk_client_id REFERENCES client,
     bank_id            UUID
         CONSTRAINT fk_bank_id REFERENCES bank,
-    start_date      date,
-    end_date        date,
-    number_months   int,
-    amount          numeric(19, 4),
-    monthly_payment numeric(19, 4),
-    interest_rate   float,
+    start_date         date,
+    end_date           date,
+    number_months      int,
+    amount             numeric(19, 4),
+    monthly_payment    numeric(19, 4),
+    interest_rate      float,
     employer_id        UUID
         CONSTRAINT fk_employer_id REFERENCES employee,
     payment_account_id UUID
         CONSTRAINT fk_payment_account_id REFERENCES payment_account
 );
 
-create table client_banks(
-    banks_id UUID CONSTRAINT fk_bank_id REFERENCES bank,
-    client_id UUID CONSTRAINT fk_client_id REFERENCES client
+create table client_banks
+(
+    banks_id   UUID
+        CONSTRAINT fk_bank_id REFERENCES bank,
+    clients_id UUID
+        CONSTRAINT fk_client_id REFERENCES client
 )
